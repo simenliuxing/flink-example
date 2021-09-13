@@ -67,10 +67,10 @@ public class DtStackExample {
         // {"name":"dtstack","age":"12","timestamp":"2021-08-08 10:10:10"}
         // {"name":"dtstack","age":"12","timestamp":"2021-08-08 10:10:20"}
         Properties properties = new Properties();
-        properties.setProperty("bootstrap.servers", "172.16.100.174:9092");
+        properties.setProperty("bootstrap.servers", "172.16.100.109:9092");
         properties.setProperty("group.id", "dtstack");
         FlinkKafkaConsumer<String> myConsumer =
-                new FlinkKafkaConsumer<>("test", new SimpleStringSchema(), properties);
+                new FlinkKafkaConsumer<>("testIn", new SimpleStringSchema(), properties);
         myConsumer.setStartFromLatest();
 
         // 解析source端数据
