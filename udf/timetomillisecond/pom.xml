@@ -15,12 +15,12 @@
 
     <dependencies>
         <!-- todo 一些依赖的第三方jar可放在具体的udf中，如
-         -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.46</version>
         </dependency>
+        -->
     </dependencies>
 
     <build>
