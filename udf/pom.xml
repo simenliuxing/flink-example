@@ -13,8 +13,6 @@
     <name>flink-example : udf : </name>
 
     <modules>
-        <module>timetosecond</module>
-        <module>timetomillisecond</module>
         <module>udfdemo</module>
     </modules>
 
