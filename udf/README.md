@@ -13,20 +13,3 @@
 #### 5.结果验证
 ![img.png](docs/images/img5.png)
 
-### 2.一些数栈开发内置的udf
-#### 1.增加毫秒级与秒级时间戳精度UDF
-
-```
-CREATE scala FUNCTION timeToSecondUdf WITH com.dtstack.flink.streamudf.udf.TimeToSecondUdf;
-CREATE scala FUNCTION timeToMilliSecondUdf WITH com.dtstack.flink.streamudf.udf.TimeToMilliSecondUdf;
-
-CREATE TABLE MyTable(
-    a varchar, -- 2018-05-29 13:52:50
-    b varchar, -- 2018-05-29 13:52:50 123
-    timeToSecondUdf(a,'yyyy-MM-dd HH:mm:ss') AS d,
-    timeToMilliSecondUdf(b,'yyyy-MM-dd HH:mm:ss SSS') AS e
- )WITH(
-    ...
- );
-```
-
