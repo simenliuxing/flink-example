@@ -42,7 +42,7 @@ import java.util.concurrent.TimeUnit;
  * 2.Prometheus已经在数栈的控制台配置好,工程中无需另外操作
  * 3.如果使用附加资源比如keytab、krb5文件,只需要在任务管理选中该任务,然后在附加资源选择即可,然后在代码中使用到资源的地方只需要使用./keytab、./krb5路径即可
  **/
-public class DtStackExample {
+public class DataStreamExample {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setParallelism(1);
@@ -90,6 +90,6 @@ public class DtStackExample {
         // 状态
 //        map.keyBy(Person::getName).flatMap(new DtStackCount()).print();
 
-        env.execute("DtStackExample");
+        env.execute("DataStreamExample");
     }
 }
