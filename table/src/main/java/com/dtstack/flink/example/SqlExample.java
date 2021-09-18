@@ -65,10 +65,8 @@ public class SqlExample {
                 "    'connector.type' = 'kafka',\n" +
                 "    'connector.version' = 'universal',\n" +
                 "    'connector.topic' = 'testIn',\n" +
-                "    'connector.properties.0.key' = 'zookeeper.connect',\n" +
-                "    'connector.properties.0.value' = 'xx.xx.xx.xx:2181',\n" +
-                "    'connector.properties.1.key' = 'bootstrap.servers',\n" +
-                "    'connector.properties.1.value' = 'xx.xx.xx.xx:9092',\n" +
+                "    'connector.properties.0.key' = 'bootstrap.servers',\n" +
+                "    'connector.properties.0.value' = 'xxx:9092',\n" +
                 "    'update-mode' = 'append',\n" +
                 "    'format.type' = 'json',\n" +
                 "    'format.derive-schema' = 'true'\n" +
@@ -80,7 +78,7 @@ public class SqlExample {
                 "    age Int\n" +
                 ") WITH (\n" +
                 "    'connector.type' = 'jdbc',\n" +
-                "    'connector.url' = 'jdbc:mysql://xx.xx.xx.xx:3306/test',\n" +
+                "    'connector.url' = 'jdbc:mysql://xxx:3306/test',\n" +
                 "    'connector.table' = 'jdbcsink',\n" +
                 "    'connector.username' = 'xxx',\n" +
                 "    'connector.password' = 'xxx',\n" +
