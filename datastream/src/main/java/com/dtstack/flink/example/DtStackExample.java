@@ -50,7 +50,7 @@ public class DtStackExample {
 
         // todo flink cp只需要配置这些即可，其他已经在数栈的控制台配置好(RocksDB、增量cp),工程中无需另外操作
         // 设置检查点时间周期5分钟，设置该参数但表开启cp
-        env.enableCheckpointing(3000000);
+        env.enableCheckpointing(300000);
         // 设置两个检查点时间间隔1分钟
         env.getCheckpointConfig().setMinPauseBetweenCheckpoints(60000);
         // 设置检查点超时时间10分钟

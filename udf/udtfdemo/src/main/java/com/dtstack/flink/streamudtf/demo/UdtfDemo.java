@@ -23,16 +23,12 @@ public class UdtfDemo extends TableFunction<Tuple2<String, Integer>> {
      * @return 返回参数
      */
     public void eval(String input){
-        for(String s:input.split(separator)){
-
-            try {
+        try {
+            for(String s:input.split(separator)){
                 collect(new Tuple2<>(s,s.length()));
-            } catch (Exception e) {
-                LOG.error(e.toString());
             }
+        }catch (Exception e) {
+            LOG.error(e.toString());
         }
-
     }
 }
-
-
