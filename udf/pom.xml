@@ -14,6 +14,7 @@
 
     <modules>
         <module>udfdemo</module>
+        <module>udtfdemo</module>
         <module>udafdemo</module>
     </modules>
 
