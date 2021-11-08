@@ -6,45 +6,18 @@ package com.dtstack.flink.demo.pojo;
  * @author beifeng
  */
 public class User {
-    String userid;
-    int age;
-    long dttime;
-    String orderId;
-    String orderTime;
+   private  String userid;
+   private  int age;
+   private  long dttime;
+   private  int cityId;
+    private String cityName;
 
-    public User(String userid, int age, long dttime, String orderId, String orderTime) {
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
         this.userid = userid;
-        this.age = age;
-        this.dttime = dttime;
-        this.orderId = orderId;
-        this.orderTime = orderTime;
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
-    public String getOrderTime() {
-        return orderTime;
-    }
-
-    public void setOrderTime(String orderTime) {
-        this.orderTime = orderTime;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userid='" + userid + '\'' +
-                ", age=" + age +
-                ", dttime=" + dttime +
-                ", orderId='" + orderId + '\'' +
-                ", orderTime='" + orderTime + '\'' +
-                '}';
     }
 
     public int getAge() {
@@ -63,11 +36,27 @@ public class User {
         this.dttime = dttime;
     }
 
-    public String getUserid() {
-        return userid;
+    public int getCityId() {
+        return cityId;
     }
 
-    public void setUserid(String userid) {
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public User(String userid, int age, long dttime, int cityId, String cityName) {
         this.userid = userid;
+        this.age = age;
+        this.dttime = dttime;
+        this.cityId = cityId;
+        this.cityName = cityName;
     }
 }
