@@ -2,7 +2,11 @@ package com.dtstack.flink.demo.func;
 
 import com.dtstack.flink.demo.pojo.PvUvInfo;
 import com.dtstack.flink.demo.util.HbaseUtil;
+import com.dtstack.flink.demo.util.MetricConstant;
 import org.apache.flink.configuration.Configuration;
+import org.apache.flink.metrics.Counter;
+import org.apache.flink.metrics.Meter;
+import org.apache.flink.metrics.MeterView;
 import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
@@ -28,7 +32,12 @@ public class HbaseSink extends RichSinkFunction<PvUvInfo> {
     private static final byte[] FAMILY = Bytes.toBytes("data");
     private Connection connection;
     private Table hbaseTable;
-
+    /**
+     * metric 所需要
+     */
+    public transient Counter outRecords;
+    public transient Counter outDirtyRecords;
+    public transient Meter outRecordsRate;
     @Override
     public void invoke(PvUvInfo value, Context context) {
 
@@ -39,7 +48,10 @@ public class HbaseSink extends RichSinkFunction<PvUvInfo> {
         put.addColumn(FAMILY, COLUMN_START_TIME, Bytes.toBytes(value.getStartTime()));
         try {
             hbaseTable.put(put);
+            outRecords.inc();
         } catch (IOException e) {
+            // 这里直接抛出异常,没有捕捉
+            outDirtyRecords.inc();
             throw new RuntimeException("插入hbase失败");
         }
 
@@ -59,5 +71,10 @@ public class HbaseSink extends RichSinkFunction<PvUvInfo> {
     public void open(Configuration parameters) throws Exception {
         connection = HbaseUtil.getConnection();
         hbaseTable = connection.getTable(TableName.valueOf("xzw_test"));
+
+        outRecords = getRuntimeContext().getMetricGroup().counter(MetricConstant.DT_NUM_RECORDS_OUT);
+        outDirtyRecords = getRuntimeContext().getMetricGroup().counter(MetricConstant.DT_NUM_DIRTY_RECORDS_OUT);
+        outRecordsRate = getRuntimeContext().getMetricGroup().meter(MetricConstant.DT_NUM_RECORDS_OUT_RATE, new MeterView(outRecords, 20));
+
     }
 }
