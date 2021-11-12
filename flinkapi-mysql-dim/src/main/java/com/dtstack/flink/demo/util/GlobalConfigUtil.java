@@ -73,21 +73,4 @@ public class GlobalConfigUtil {
         return CONFIG.getString("mysql.url");
     }
 
-
-    public static void main(String[] args) throws ClassNotFoundException {
-
-        System.out.println(
-                GlobalConfigUtil.bootstrapServers() + " -- " +
-                        GlobalConfigUtil.groupId() + " -- " +
-                        GlobalConfigUtil.zkHp() + " -- " +
-                        GlobalConfigUtil.kks() + " -- " +
-                        GlobalConfigUtil.kkd() + " -- " +
-                        GlobalConfigUtil.getTopic() + " -- " +
-                        GlobalConfigUtil.mysqlName() + " -- " +
-                        GlobalConfigUtil.mysqlName() + " -- " +
-                        GlobalConfigUtil.mysqlPwd() + " -- " +
-                        GlobalConfigUtil.mysqlUrl() + " -- "
-        );
-
-    }
 }

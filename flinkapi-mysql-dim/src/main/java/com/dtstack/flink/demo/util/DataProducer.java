@@ -24,7 +24,7 @@ public class DataProducer {
     static AtomicInteger i = new AtomicInteger(0);
 
     public static void main(String[] args) {
-        System.out.println(USER_IDS.length);
+
         for (int j = 0; j < 5; j++) {
             new Thread(() -> {
                 producer("test1");
@@ -34,6 +34,9 @@ public class DataProducer {
         //producer("test1",System.in);
     }
 
+    /**
+     * 控制行输入来控制发送频率
+     */
     public static void producer(String topic, InputStream inputStream) {
         KafkaProducer<String, String> producer = new KafkaProducer<>(getProp());
         Scanner scanner = new Scanner(inputStream);

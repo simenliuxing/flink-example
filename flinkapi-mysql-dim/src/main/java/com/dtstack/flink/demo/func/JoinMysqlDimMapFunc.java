@@ -1,12 +1,14 @@
 package com.dtstack.flink.demo.func;
 
-import com.dtstack.flink.demo.pojo.User;
 import com.dtstack.flink.demo.util.MetricConstant;
 import org.apache.flink.api.common.functions.RichMapFunction;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.metrics.Counter;
 import org.apache.flink.metrics.Meter;
 import org.apache.flink.metrics.MeterView;
+import org.apache.flink.types.Row;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 
@@ -15,7 +17,8 @@ import java.sql.*;
  *
  * @author beifeng
  */
-public class JoinMysqlDimMapFunc extends RichMapFunction<User, User> {
+public class JoinMysqlDimMapFunc extends RichMapFunction<Row, Row> {
+    private final static Logger LOG = LoggerFactory.getLogger(JoinMysqlDimMapFunc.class);
     /**
      * tps ransactions Per Second
      */
@@ -31,33 +34,22 @@ public class JoinMysqlDimMapFunc extends RichMapFunction<User, User> {
     protected transient Counter dirtyDataCounter;
     Connection connection;
 
-    public static void main(String[] args) throws SQLException {
-        Connection connection1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true"
-                , "root", "root123456");
-        System.out.println(connection1);
-        Connection connection2 = DriverManager.getConnection("jdbc:mysql://192.168.107.237:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true"
-                , "root", "root123456");
-        System.out.println(connection2);
-    }
-
     @Override
-    public void open(Configuration parameters) throws Exception {
-        connection = DriverManager.getConnection("jdbc:mysql://192.168.107.237:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true"
-                , "root", "root123456");
-        System.out.println("mysql 连接成功");
-
+    public void open(Configuration parameters) {
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://192.168.107.237:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true"
+                    , "root", "root123456");
+            LOG.info("mysql connect succeed !");
+        } catch (SQLException e) {
+            LOG.error("mysql connect failed !", e);
+        }
         dirtyDataCounter = getRuntimeContext().getMetricGroup().counter(MetricConstant.DT_DIRTY_DATA_COUNTER);
-
         numInRecord = getRuntimeContext().getMetricGroup().counter(MetricConstant.DT_NUM_RECORDS_IN_COUNTER);
         numInRate = getRuntimeContext().getMetricGroup().meter(MetricConstant.DT_NUM_RECORDS_IN_RATE, new MeterView(numInRecord, 20));
-
         numInBytes = getRuntimeContext().getMetricGroup().counter(MetricConstant.DT_NUM_BYTES_IN_COUNTER);
         numInBytesRate = getRuntimeContext().getMetricGroup().meter(MetricConstant.DT_NUM_BYTES_IN_RATE, new MeterView(numInBytes, 20));
-
         numInResolveRecord = getRuntimeContext().getMetricGroup().counter(MetricConstant.DT_NUM_RECORDS_RESOVED_IN_COUNTER);
         numInResolveRate = getRuntimeContext().getMetricGroup().meter(MetricConstant.DT_NUM_RECORDS_RESOVED_IN_RATE, new MeterView(numInResolveRecord, 20));
-
-
     }
 
     @Override
@@ -68,25 +60,31 @@ public class JoinMysqlDimMapFunc extends RichMapFunction<User, User> {
     }
 
     @Override
-    public User map(User user) {
+    public Row map(Row row) {
+        Object cityId = row.getField(3);
+        String sql = "select * from mysqldim where id =" + cityId + " ;";
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("sql : {}", sql);
+        }
         try {
             numInRecord.inc();
-            numInBytes.inc(user.toString().getBytes().length);
+            numInBytes.inc(row.toString().getBytes().length);
             numInResolveRecord.inc();
+
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(
-                    "select * from mysqldim where id =" + user.getCityId() + " ;"
-            );
-            if (rs.next()) {
-                user.setCityName(rs.getString("city_name"));
+            ResultSet rs = statement.executeQuery(sql);
+            boolean next = rs.next();
+            if (next) {
+                row.setField(4, rs.getString("city_name"));
             }
+
             rs.close();
             statement.close();
         } catch (SQLException e) {
             dirtyDataCounter.inc();
-            e.printStackTrace();
+            LOG.error("side join fails ,input : {} , sql :{}, /n  cause : {}", row.toString(), sql, e);
         }
-        return user;
+        return row;
     }
 
 }

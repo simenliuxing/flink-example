@@ -1,9 +1,9 @@
 package com.dtstack.flink.demo.util;
 
 /**
+ * metric所需要的常量
+ *
  * @author Ada Wong
- * @program flink-example
- * @create 2021/07/14
  * TODO metric名字请不要随意修改，不然无法对接数栈的数据曲线
  **/
 public class MetricConstant {

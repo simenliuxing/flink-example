@@ -11,7 +11,6 @@
     <name>flink-example : api : mysql-dim</name>
     <artifactId>flinkapi-mysql-dim</artifactId>
 
-
     <dependencies>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -23,41 +22,25 @@
             <artifactId>flink-connector-kafka_2.11</artifactId>
             <version>${flink.version}</version>
         </dependency>
-
-
+        <!--mysql依赖-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.17</version>
         </dependency>
-
-
+        <!--读取配置文件依赖-->
         <dependency>
             <groupId>com.typesafe</groupId>
             <artifactId>config</artifactId>
             <version>1.4.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-core</artifactId>
-            <version>${flink.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-
-
         <!--hbase 依赖-->
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-client</artifactId>
             <version>2.3.2</version>
         </dependency>
-
-
-
     </dependencies>
-
 
     <build>
         <plugins>
@@ -79,11 +62,6 @@
                                     <mainClass>com.dtstack.flink.demo.App</mainClass>
                                 </transformer>
                             </transformers>
-                            <artifactSet>
-                                <excludes>
-
-                                </excludes>
-                            </artifactSet>
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
