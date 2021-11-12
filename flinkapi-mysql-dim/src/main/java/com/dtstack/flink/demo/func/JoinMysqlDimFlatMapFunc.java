@@ -1,12 +1,13 @@
 package com.dtstack.flink.demo.func;
 
 import com.dtstack.flink.demo.util.MetricConstant;
-import org.apache.flink.api.common.functions.RichMapFunction;
+import org.apache.flink.api.common.functions.RichFlatMapFunction;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.metrics.Counter;
 import org.apache.flink.metrics.Meter;
 import org.apache.flink.metrics.MeterView;
 import org.apache.flink.types.Row;
+import org.apache.flink.util.Collector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +18,8 @@ import java.sql.*;
  *
  * @author beifeng
  */
-public class JoinMysqlDimMapFunc extends RichMapFunction<Row, Row> {
-    private final static Logger LOG = LoggerFactory.getLogger(JoinMysqlDimMapFunc.class);
+public class JoinMysqlDimFlatMapFunc extends RichFlatMapFunction<Row, Row> {
+    private final static Logger LOG = LoggerFactory.getLogger(JoinMysqlDimFlatMapFunc.class);
     /**
      * tps ransactions Per Second
      */
@@ -59,8 +60,9 @@ public class JoinMysqlDimMapFunc extends RichMapFunction<Row, Row> {
         }
     }
 
+
     @Override
-    public Row map(Row row) {
+    public void flatMap(Row row, Collector<Row> collector) throws Exception {
         Object cityId = row.getField(3);
         String sql = "select * from mysqldim where id =" + cityId + " ;";
         if (LOG.isDebugEnabled()) {
@@ -73,18 +75,17 @@ public class JoinMysqlDimMapFunc extends RichMapFunction<Row, Row> {
 
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
-            boolean next = rs.next();
-            if (next) {
+            if (rs.next()) {
                 row.setField(4, rs.getString("city_name"));
+                collector.collect(row);
             }
 
             rs.close();
             statement.close();
         } catch (SQLException e) {
             dirtyDataCounter.inc();
-            LOG.error("side join fails ,input : {} , sql :{}, /n  cause : {}", row.toString(), sql, e);
+            LOG.error("side join fails ,input : {} , sql :  {}, /n  cause : {}", row, sql, e);
         }
-        return row;
-    }
 
+    }
 }

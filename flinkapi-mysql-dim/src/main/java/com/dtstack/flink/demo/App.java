@@ -1,7 +1,7 @@
 package com.dtstack.flink.demo;
 
 import com.dtstack.flink.demo.func.HbaseSink;
-import com.dtstack.flink.demo.func.JoinMysqlDimMapFunc;
+import com.dtstack.flink.demo.func.JoinMysqlDimFlatMapFunc;
 import com.dtstack.flink.demo.kafka.CustomKafkaEventSchema;
 import com.dtstack.flink.demo.util.GlobalConfigUtil;
 import com.dtstack.flink.demo.util.KafkaUtil;
@@ -37,7 +37,7 @@ public class App {
 
         env.addSource(flinkKafkaConsumer)
                 // 维表关联
-                .map(new JoinMysqlDimMapFunc())
+                .flatMap(new JoinMysqlDimFlatMapFunc())
                 // 一些处理
                 .filter(v -> v.getField(4) != null)
                 // sink hbase
