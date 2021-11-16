@@ -1,0 +1,16 @@
+
+ kafka
+    message :  {"age":14,"dttime":1636083223140,"userid":"123"}
+
+ mysql
+    -- 建表语句
+    create table mysqldim (
+    	id int not null,
+    	uid varchar(30) null,
+    	order_time datetime null,
+    	constraint mysqldim_pk
+    		primary key (id)
+    );
+
+
+

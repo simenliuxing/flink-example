@@ -18,8 +18,8 @@
 
 package com.dtstack.flink.example.function;
 
-import com.dtstack.flink.example.constant.MetricConstant;
 import com.dtstack.flink.example.bean.Person;
+import com.dtstack.flink.example.constant.MetricConstant;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.metrics.Counter;
 import org.apache.flink.metrics.Meter;
