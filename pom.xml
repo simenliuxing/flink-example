@@ -11,7 +11,6 @@
         <module>datastream</module>
         <module>udf</module>
         <module>table</module>
-        <module>flinkapi-mysql-dim</module>
     </modules>
 
     <properties>
