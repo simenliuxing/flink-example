@@ -16,6 +16,7 @@
         <module>example</module>
         <module>mysql-dim-hbase-sink</module>
         <module>hive-sink</module>
+        <module>mysql2http</module>
     </modules>
 
     <dependencies>
