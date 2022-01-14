@@ -1,6 +1,8 @@
 package com.dtstack.flink.udaf;
 
 import org.apache.flink.table.functions.AggregateFunction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @Author xiaoyu
@@ -8,6 +10,8 @@ import org.apache.flink.table.functions.AggregateFunction;
  * @Description 使用场景，求平均销售额
  */
 public class UdafDemo extends AggregateFunction<Double, UdafDemo.WeightedAvgAccumulator> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(UdafDemo.class);
 
     //定义累加器中的数据结构
     public static class WeightedAvgAccumulator {
@@ -32,8 +36,12 @@ public class UdafDemo extends AggregateFunction<Double, UdafDemo.WeightedAvgAccu
 
     //中间的累加过程
     public void accumulate(WeightedAvgAccumulator acc, Double iValue, Integer iWeight) {
-        acc.sum += iValue * iWeight;
-        acc.count += iWeight;
+        try {
+            acc.sum += iValue * iWeight;
+            acc.count += iWeight;
+        } catch (Exception e) {
+            LOG.error(e.toString());
+        }
     }
 
     //发生错误的话 可以回撤
