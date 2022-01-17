@@ -51,7 +51,7 @@ public class KafkaHiveDemo {
 
         //配置kafka数据源
         Properties properties = new Properties();
-        properties.setProperty("bootstrap.servers","172.16.100.109:9092");
+        properties.setProperty("bootstrap.servers","ip:port");
         properties.setProperty("group.id","dtstack");
 
         //{"id":1,"name":"zhnag","age":11}

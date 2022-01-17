@@ -41,7 +41,7 @@ public class HiveSink extends RichSinkFunction<Row> {
         rows = new ArrayList<>();
         try {
             Class.forName("org.apache.hive.jdbc.HiveDriver");
-            connection = DriverManager.getConnection("jdbc:hive2://172.16.101.161:10000", "admin", "");
+            connection = DriverManager.getConnection("jdbc:hive2://ip:port", "******", "******");
             pstmt = connection.createStatement();
 
             LOG.info("connection = " + connection);
