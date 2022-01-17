@@ -14,6 +14,19 @@
 
     <dependencies>
         <!-- todo 一些依赖的第三方jar可放在具体的udf中 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.75</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
