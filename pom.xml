@@ -11,7 +11,7 @@
     <modules>
         <module>datastream</module>
         <module>udf</module>
-        <module>table</module>
+
     </modules>
 
     <properties>
@@ -22,6 +22,13 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.scala-lang </groupId>
+            <artifactId>Scala-library</artifactId>
+            <version>2.11.12</version>
+        </dependency>
+
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -51,6 +58,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-streaming-scala_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.flink</groupId>
