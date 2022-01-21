@@ -12,7 +12,13 @@
     <artifactId>udtfdemo</artifactId>
     <name>flink-example : udf : udtfdemo</name>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
