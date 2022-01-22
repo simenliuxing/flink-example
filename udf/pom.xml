@@ -12,16 +12,13 @@
     <groupId>com.dtstack.flink</groupId>
     <artifactId>udf</artifactId>
     <packaging>pom</packaging>
+    <name>flink-example : udf :</name>
     <modules>
         <module>udfdemo</module>
         <module>udafdemo</module>
         <module>udtfdemo</module>
     </modules>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
 
     <dependencies>
         <!--        flink自定义函数需要的依赖-->

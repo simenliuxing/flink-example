@@ -11,7 +11,7 @@
 
     <groupId>com.dtstack.flink</groupId>
     <artifactId>datastream</artifactId>
-
+    <name>flink-example : datastream :</name>
 
     <dependencies>
         <!--        flink连接kafka需要的依赖-->
