@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 public class UdtfDemo extends TableFunction<Tuple2<String, Integer>> {
     private static final Logger LOG = LoggerFactory.getLogger(UdtfDemo.class);
 
-    // 定义属性，分隔符
+    /** 定义属性，分隔符*/
     private String separator="-";
 
 
