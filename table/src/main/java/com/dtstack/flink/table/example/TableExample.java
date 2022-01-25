@@ -44,7 +44,7 @@ public class TableExample {
 
     //{"user_id":1,"user_name":"zhangsan","score":100.0}
     Properties properties = new Properties();
-    properties.setProperty("bootstrap.servers","172.16.100.109:9092");
+    properties.setProperty("bootstrap.servers","xxx:9092");
     properties.setProperty("group.id","xy_cs");
     FlinkKafkaConsumer<String> flinkKafkaConsumer = new FlinkKafkaConsumer<String>("xy_cs_Table",new SimpleStringSchema(),properties);
 

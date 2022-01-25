@@ -45,7 +45,7 @@ public class SqlExample {
             + ") WITH (\n"
             + "  'connector' = 'kafka',\n"
             + "  'topic' = 'xy_cs_tableSql',\n"
-            + "  'properties.bootstrap.servers' = '172.16.100.109:9092',\n"
+            + "  'properties.bootstrap.servers' = 'xxx:9092',\n"
             + "  'properties.group.id' = 'xy_testGroup',\n"
             + "  'scan.startup.mode' = 'earliest-offset',\n"
             + "  'format' = 'json'\n"
@@ -60,7 +60,7 @@ public class SqlExample {
               "  PRIMARY KEY (id) NOT ENFORCED\n" +
               ") WITH (\n" +
               "   'connector' = 'jdbc',\n" +
-              "   'url' = 'jdbc:mysql://192.168.114.44:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false',\n" +
+              "   'url' = 'jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false',\n" +
               "   'table-name' = 'sinkFlink12',\n" +
               "   'username' = 'root',\n" +
               "   'password' = 'root'\n" +
