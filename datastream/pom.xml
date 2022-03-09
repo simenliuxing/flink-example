@@ -9,9 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.dtstack.flink</groupId>
     <artifactId>datastream</artifactId>
+    <packaging>pom</packaging>
     <name>flink-example : datastream :</name>
+    <modules>
+        <module>from-kafka</module>
+    </modules>
 
     <dependencies>
         <!--        flink连接kafka需要的依赖-->
