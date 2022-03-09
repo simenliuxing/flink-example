@@ -12,6 +12,7 @@ import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 public class MysqlCdcApp {
 
   public static void main(String[] args) throws Exception {
+
     /*
      TODO 建表语句,source和sink结构一样,表名改一下即可测试
 
@@ -38,13 +39,13 @@ public class MysqlCdcApp {
             env, EnvironmentSettings.newInstance().useBlinkPlanner().inStreamingMode().build());
     env.setParallelism(1);
 
-    final String host = "192.168.112.237";
+    final String host = "*";
     final int port = 3306;
-    final String user = "root";
-    final String pwd = "root123456";
-    final String db = "test";
-    final String sourceTable = "mysql_cdc_test";
-    final String sinkTable = "mysql_cdc_test2";
+    final String user = "*";
+    final String pwd = "*";
+    final String db = "database";
+    final String sourceTable = "sourcetable";
+    final String sinkTable = "sinktable";
 
     String sourceDDL =
         String.format(
