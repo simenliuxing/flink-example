@@ -62,5 +62,30 @@ sink.batch.size=1024
 filed.upper=true
 ```
 
+#### 华为kafka包
+> 将下载华为的kafka jar包安装到本地,在本地可以直接引用
+> 配置好包的的坐标 id 等信息,进行执行 然后再pom中引入
+> 在source中放了一个当前使用版本的kafka jar 如果需要
+> 其他版本可以在华为仓库下载
 
+mvn install:install-file \
+-Dfile=/xxx/kafka-clients-1.1.0-mrs-2.0.jar \ 
+-DgroupId=org.apache.kafka \
+-DartifactId=kafka-clients \
+-Dversion=1.1.0-mrs-2.0 -Dpackaging=jar
 
+```xml
+    <!--华为的仓库,如果安装到本地可以直接引用华为仓库-->
+    <repositories>
+        <repository>
+            <id>huaweicloudsdk</id>
+            <url>https://repo.huaweicloud.com/repository/maven/huaweicloudsdk</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+```

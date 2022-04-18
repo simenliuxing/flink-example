@@ -17,7 +17,7 @@
         <module>mysql-dim-hbase-sink</module>
         <module>hive-sink</module>
         <module>mysql2http</module>
-        <module>hwkafka2kudu</module>
+        <module>hwkafka-to-kudu</module>
     </modules>
 
     <dependencies>
