@@ -89,3 +89,9 @@ mvn install:install-file \
         </repository>
     </repositories>
 ```
+
+#### 三. 代码中配置文件如何获取
+本地模式,直接写绝对路径即可。on yarn模式如下添加即可,在代码中直接通过文件名称获取。
+
+![img.png](doc/img.png)
+
