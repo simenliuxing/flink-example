@@ -17,6 +17,7 @@
 
 package org.apache.flink.streaming.connectors.kafka;
 
+import com.dtstack.flink.fk.util.DownloadFileUtils;
 import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.api.common.serialization.DeserializationSchema;
 import org.apache.flink.configuration.Configuration;
@@ -49,6 +50,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
+import static com.dtstack.flink.fk.util.DownloadFileUtils.LOCAL_KEYTAB;
+import static com.dtstack.flink.fk.util.DownloadFileUtils.LOCAL_KRB;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.PropertiesUtil.getBoolean;
 import static org.apache.flink.util.PropertiesUtil.getLong;
@@ -316,14 +319,16 @@ public class FlinkKafkaConsumer<T> extends FlinkKafkaConsumerBase<T> {
 		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, deSerName);
 	}
 
-	@Override
-	public void open(Configuration configuration) throws Exception {
-		// todo tm 端进行认证 ，本地只需要在main方法中设置绝对路径
-		System.setProperty("java.security.krb5.conf", "krb5.conf");
-		// todo 覆盖容器中的jaas，注意这里的keyTab=路径
+    @Override
+    public void open(Configuration configuration) throws Exception {
+		// todo 为了将认证文件下载到本地，一般用不上。注意：如果是从hdfs上下载会有问题，可改成sftp
+		DownloadFileUtils.downloadFile();
+
+		System.setProperty("java.security.krb5.conf", LOCAL_KRB);
+
 		properties.put("sasl.jaas.config", "com.sun.security.auth.module.Krb5LoginModule required\n" +
 				"useKeyTab=true\n" +
-				"keyTab=\"kafka.keytab\"\n" +
+				"keyTab=\"" + LOCAL_KEYTAB + "\"\n" +
 				"principal=\"kafka/hadoop.hadoop.com@HADOOP.COM\"\n" +
 				"storeKey=true\n" +
 				"debug=false\n" +

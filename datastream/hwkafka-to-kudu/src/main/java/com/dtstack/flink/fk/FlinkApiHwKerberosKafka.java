@@ -17,9 +17,6 @@ public class FlinkApiHwKerberosKafka {
 
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-        // todo 本地提交才需要设置，注意路径，on yarn 不会执行main方法，所以这里无效
-        System.setProperty("java.security.krb5.conf", "krb5.conf");
-
         Properties props = new Properties();
         props.put("security.protocol", "SASL_PLAINTEXT");
         props.put("sasl.kerberos.service.name", "kafka");
