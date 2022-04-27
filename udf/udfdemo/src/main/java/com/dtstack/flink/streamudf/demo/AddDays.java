@@ -13,10 +13,14 @@ import java.util.Date;
  * @Author yuange
  * @Create 2022/4/23 19:28
  * @Description 日期转换函数，按天加减
+ * 使用案例：
+ * AddDays("20220427,-1,"yyyyMMdd");
+ * AddDays("2022-04-27",3,"yyyy-MM-dd");
+ * AddDays("2022-04-27 01:11:11",-1,"yyyy-MM-dd HH:mm:ss");
  */
-public class DateFormat extends ScalarFunction {
+public class AddDays extends ScalarFunction {
 
-    private final Logger LOG = LoggerFactory.getLogger(DateFormat.class);
+    private final Logger LOG = LoggerFactory.getLogger(AddDays.class);
 
     /**
      * 日期转换函数，按天加减
@@ -30,10 +34,10 @@ public class DateFormat extends ScalarFunction {
         String outputDate = "";
         try {
             if (StringUtils.isBlank(date)) {
-                throw new Exception(String.format("The field 'date' [%s] you entered invalid", date));
+                throw new RuntimeException (String.format("The field 'date' [%s] you entered invalid", date));
             }
             if (StringUtils.isBlank(pattern)) {
-                throw new Exception(String.format("The field 'pattern' [%s] you entered invalid", pattern));
+                throw new RuntimeException(String.format("The field 'pattern' [%s] you entered invalid", pattern));
             }
 
             // 对date按pattern形式转成JavaDate
@@ -42,13 +46,12 @@ public class DateFormat extends ScalarFunction {
             Date _outputDate = DateUtils.addDays(_date, days);
             outputDate = DateFormatUtils.format(_outputDate, pattern);
 
-
         } catch (Exception e) {
-            e.printStackTrace();
-            LOG.error(e.toString());
+            LOG.error("AddDays error",e);
         }
         return outputDate;
     }
+
 
 }
 
