@@ -2,19 +2,23 @@ package com.dtstack.flink.streamudaf.demo;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dtstack.flink.streamudaf.demo.entity.StaffAmt;
-import com.dtstack.flink.streamudaf.demo.util.LruLinkedHashMap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.table.functions.AggregateFunction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 
-public class StaffCountUDAF extends AggregateFunction<String, LruLinkedHashMap<String, Object>> {
+/**
+ * @author chuixue
+ * 带LRU缓存和过期功能的udaf
+ */
+public class LruHashMapUdaf extends AggregateFunction<String, LruLinkedHashMap<String, Object>> {
 
     /**
      * 定义如何根据输入更新Accumulator
@@ -72,5 +76,23 @@ public class StaffCountUDAF extends AggregateFunction<String, LruLinkedHashMap<S
     @Override
     public LruLinkedHashMap<String, Object> createAccumulator() {
         return new LruLinkedHashMap<>(1024, 0.75f);
+    }
+}
+
+class LruLinkedHashMap<String, Object> extends LinkedHashMap<String, Object> {
+    private static final long serialVersionUID = 1L;
+    private final int initialCapacity;
+
+    public LruLinkedHashMap(int initialCapacity, float loadFactor) {
+        super(initialCapacity, loadFactor, true);
+        this.initialCapacity = initialCapacity;
+    }
+
+    /**
+     * 每次添加数据的时候，就会自动判断是否个数已经超过maximumSize，如果超过就删掉最旧的那条（相当于是FIFO算法）。
+     */
+    @Override
+    protected boolean removeEldestEntry(Map.Entry<String, Object> eldest) {
+        return size() > this.initialCapacity;
     }
 }

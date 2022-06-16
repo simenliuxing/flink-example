@@ -9,32 +9,36 @@ import org.apache.flink.table.functions.TableFunction;
 import org.apache.flink.types.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author longxuan
  * @create 2021-09-18 10:19
- * @description
+ * @description json解析udtf
  **/
 
-public class UdtfJsonDemo extends TableFunction<Row>{
-    private static final Logger LOG = LoggerFactory.getLogger(UdtfDemo.class);
-    private static final ObjectMapper OBJECTMAPPER  = new ObjectMapper();
+public class JsonParserUdtf extends TableFunction<Row> {
+    private static final Logger LOG = LoggerFactory.getLogger(JsonParserUdtf.class);
+    private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
 
-    /**定义属性，分隔符*/
+    /**
+     * 定义属性，分隔符
+     */
     @Override
     public TypeInformation<Row> getResultType() {
         return new RowTypeInfo(Types.STRING, Types.STRING, Types.STRING, Types.STRING, Types.STRING, Types.STRING);
     }
+
     /**
      * @param input 输入参数
      * @return 返回参数
      */
-    public void eval(String input){
+    public void eval(String input) {
         try {
-            String n2Oout="";
+            String n2Oout = "";
             Row row = new Row(6);
             JsonNode jsonNode = OBJECTMAPPER.readTree(input);
             row.setField(0, jsonNode.get("name1").asText());
@@ -48,13 +52,13 @@ public class UdtfJsonDemo extends TableFunction<Row>{
                 row.setField(4, values.get(i).asText());
                 i++;
                 Iterator<JsonNode> n2Node = node.elements();
-                while (n2Node.hasNext()){
-                    n2Oout+=n2Node.next().asText()+"#";
+                while (n2Node.hasNext()) {
+                    n2Oout += n2Node.next().asText() + "#";
                 }
-                n2Oout=n2Oout.substring(0, n2Oout.length() - 1);
+                n2Oout = n2Oout.substring(0, n2Oout.length() - 1);
                 row.setField(5, n2Oout);
                 collect(row);
-                n2Oout="";
+                n2Oout = "";
             }
         } catch (Exception e) {
             LOG.error(e.toString());

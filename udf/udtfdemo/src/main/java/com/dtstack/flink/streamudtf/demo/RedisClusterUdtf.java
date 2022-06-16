@@ -16,9 +16,10 @@ import java.util.Set;
 
 /**
  * @author xiuyuan
+ * 在udtf中访问redis cluster 数据库
  */
-public class AccessRedisCluster extends TableFunction<Row> {
-    private static final Logger LOG = LoggerFactory.getLogger(AccessRedis.class);
+public class RedisClusterUdtf extends TableFunction<Row> {
+    private static final Logger LOG = LoggerFactory.getLogger(RedisClusterUdtf.class);
 
     private JedisCluster cluster = null;
 

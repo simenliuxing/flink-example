@@ -25,11 +25,11 @@ import org.slf4j.LoggerFactory;
 /**
  * @author chuixue
  * @create 2021-09-08 14:19
- * @description
+ * @description udf案例
  **/
-public class UdfDemo extends ScalarFunction {
+public class DemoUdf extends ScalarFunction {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UdfDemo.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DemoUdf.class);
 
     /**
      * @param input 输入参数

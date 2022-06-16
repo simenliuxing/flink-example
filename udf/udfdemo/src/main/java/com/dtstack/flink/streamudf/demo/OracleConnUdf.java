@@ -16,9 +16,9 @@ import java.sql.SQLException;
  * @date 2021-12-21 10:27
  * 通过该UDF函数访问数据库，解决日志信息转换成表中数据的增删改操作
  */
-public class UdfIntermediateOperation extends ScalarFunction {
+public class OracleConnUdf extends ScalarFunction {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UdfIntermediateOperation.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OracleConnUdf.class);
 
     private Connection connect = null;
 

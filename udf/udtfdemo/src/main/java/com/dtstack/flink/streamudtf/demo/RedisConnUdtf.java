@@ -13,9 +13,10 @@ import java.util.Set;
 
 /**
  * @author xiuyuan
+ * 在udtf中访问redis数据库
  */
-public class AccessRedis extends TableFunction<Row> {
-    private static final Logger LOG = LoggerFactory.getLogger(AccessRedis.class);
+public class RedisConnUdtf extends TableFunction<Row> {
+    private static final Logger LOG = LoggerFactory.getLogger(RedisConnUdtf.class);
 
     private Jedis jedis = null;
 
@@ -64,5 +65,4 @@ public class AccessRedis extends TableFunction<Row> {
     public TypeInformation<Row> getResultType() {
         return Types.ROW(Types.STRING, Types.STRING);
     }
-
 }
