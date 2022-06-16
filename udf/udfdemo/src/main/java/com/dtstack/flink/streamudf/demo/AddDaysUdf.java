@@ -18,9 +18,9 @@ import java.util.Date;
  * AddDays("2022-04-27",3,"yyyy-MM-dd");
  * AddDays("2022-04-27 01:11:11",-1,"yyyy-MM-dd HH:mm:ss");
  */
-public class AddDays extends ScalarFunction {
+public class AddDaysUdf extends ScalarFunction {
 
-    private final Logger LOG = LoggerFactory.getLogger(AddDays.class);
+    private final Logger LOG = LoggerFactory.getLogger(AddDaysUdf.class);
 
     /**
      * 日期转换函数，按天加减
@@ -34,7 +34,7 @@ public class AddDays extends ScalarFunction {
         String outputDate = "";
         try {
             if (StringUtils.isBlank(date)) {
-                throw new RuntimeException (String.format("The field 'date' [%s] you entered invalid", date));
+                throw new RuntimeException(String.format("The field 'date' [%s] you entered invalid", date));
             }
             if (StringUtils.isBlank(pattern)) {
                 throw new RuntimeException(String.format("The field 'pattern' [%s] you entered invalid", pattern));
@@ -47,11 +47,9 @@ public class AddDays extends ScalarFunction {
             outputDate = DateFormatUtils.format(_outputDate, pattern);
 
         } catch (Exception e) {
-            LOG.error("AddDays error",e);
+            LOG.error("AddDays error", e);
         }
         return outputDate;
     }
-
-
 }
 
