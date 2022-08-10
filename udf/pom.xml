@@ -8,27 +8,25 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.dtstack.flink</groupId>
-    <artifactId>udf</artifactId>
     <packaging>pom</packaging>
+    <artifactId>udf</artifactId>
     <name>flink-example : udf :</name>
+
     <modules>
         <module>udfdemo</module>
-        <module>udafdemo</module>
         <module>udtfdemo</module>
+        <module>udafdemo</module>
     </modules>
 
-
     <dependencies>
-        <!--        flink自定义函数需要的依赖-->
+        <!-- todo 通过数栈提交的时候数栈会自动上传,这里无需打到jar中，其他一些第三方依赖放到具体子模块的pom.xml中，最好不要放到这里。
+         -->
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-table-common</artifactId>
             <version>${flink.version}</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
 
 </project>
