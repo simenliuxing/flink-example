@@ -12,6 +12,14 @@
     <artifactId>udtfdemo</artifactId>
     <name>flink-example : udf : udtfdemo</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180813</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
