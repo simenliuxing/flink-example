@@ -69,7 +69,7 @@ public class DataStreamExample {
         // {"name":"dtstack","age":"12","timestamp":"2021-08-08 10:10:10"}
         // {"name":"dtstack","age":"12","timestamp":"2021-08-08 10:10:20"}
         Properties properties = new Properties();
-        properties.setProperty("bootstrap.servers", "106.52.82.15:9092");
+        properties.setProperty("bootstrap.servers", "xxxxxxxx:9092");
         properties.setProperty("group.id", "dtstack");
         FlinkKafkaConsumer<String> myConsumer =
                 new FlinkKafkaConsumer<>("baixi_browse", new SimpleStringSchema(), properties);

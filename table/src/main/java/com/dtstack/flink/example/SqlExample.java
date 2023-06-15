@@ -77,10 +77,10 @@ public class SqlExample {
                 "    age Int\n" +
                 ") WITH (\n" +
                 "    'connector' = 'jdbc',\n" +
-                "    'url' = 'jdbc:mysql://106.52.82.15:3307/baixi_test',\n" +
+                "    'url' = 'jdbc:mysql://xxxxxxxx:3307/baixi_test',\n" +
                 "    'table-name' = 'baixi_test_flink',\n" +
                 "    'username' = 'root',\n" +
-                "    'password' = 'cyz19980815'\n" +
+                "    'password' = 'xxxxx'\n" +
                 ")");
 
 
