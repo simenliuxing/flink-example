@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @Author xiaoyu
  * @Create 2022/1/6 19:42
- * @Description 使用场景，求平均销售额
+ * @Description 使用场景，求平均销售额。
  */
 public class UdafDemo extends AggregateFunction<Double, UdafDemo.WeightedAvgAccumulator> {
 
