@@ -20,7 +20,7 @@
         <!-- todo 使用到的第三方公共资源需要打到jar中kafka -->
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
+            <artifactId>flink-connector-kafka</artifactId>
             <version>${flink.version}</version>
         </dependency>
     </dependencies>

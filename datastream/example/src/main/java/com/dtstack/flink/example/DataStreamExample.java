@@ -18,6 +18,7 @@
 
 package com.dtstack.flink.example;
 
+
 import com.dtstack.flink.example.bean.Person;
 import com.dtstack.flink.example.function.DtStackMapperWithMetrics;
 import com.dtstack.flink.example.function.DtStackSink;
@@ -28,6 +29,7 @@ import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
+import org.apache.log4j.Level;
 
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -56,7 +58,7 @@ public class DataStreamExample {
         // 设置检查点超时时间10分钟
         env.getCheckpointConfig().setCheckpointTimeout(600000);
 
-        // 6分钟内可以重启3次 每次重启都间隔10秒
+        // 6分钟内可以重启3次
         env.setRestartStrategy(RestartStrategies.failureRateRestart(
                 3,
                 Time.of(6, TimeUnit.MINUTES),
@@ -67,10 +69,10 @@ public class DataStreamExample {
         // {"name":"dtstack","age":"12","timestamp":"2021-08-08 10:10:10"}
         // {"name":"dtstack","age":"12","timestamp":"2021-08-08 10:10:20"}
         Properties properties = new Properties();
-        properties.setProperty("bootstrap.servers", "172.16.100.109:9092");
+        properties.setProperty("bootstrap.servers", "106.52.82.15:9092");
         properties.setProperty("group.id", "dtstack");
         FlinkKafkaConsumer<String> myConsumer =
-                new FlinkKafkaConsumer<>("testIn", new SimpleStringSchema(), properties);
+                new FlinkKafkaConsumer<>("baixi_browse", new SimpleStringSchema(), properties);
         myConsumer.setStartFromLatest();
 
         // 解析source端数据
@@ -78,6 +80,7 @@ public class DataStreamExample {
 
         // 输出结果
         map.addSink(new DtStackSink());
+//        System.out.println(map.getName());
 
         // 设置watermark 并设置延时时间
 //        SingleOutputStreamOperator<Person> watermark = map.assignTimestampsAndWatermarks(new DtStackWaterMark(org.apache.flink.streaming.api.windowing.time.Time.seconds(1)));

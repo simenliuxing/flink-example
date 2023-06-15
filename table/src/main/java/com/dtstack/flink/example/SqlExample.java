@@ -18,6 +18,8 @@
 
 package com.dtstack.flink.example;
 
+
+
 import org.apache.flink.api.common.restartstrategy.RestartStrategies;
 import org.apache.flink.api.common.time.Time;
 import org.apache.flink.streaming.api.TimeCharacteristic;
@@ -34,7 +36,7 @@ import java.util.concurrent.TimeUnit;
  **/
 public class SqlExample {
     public static void main(String[] args) throws Exception {
-        EnvironmentSettings eSeting = EnvironmentSettings.newInstance().useBlinkPlanner().inStreamingMode().build();
+        EnvironmentSettings eSeting = EnvironmentSettings.newInstance().inStreamingMode().build();
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env, eSeting);
         env.setParallelism(1);
@@ -57,37 +59,32 @@ public class SqlExample {
 
         // {"id":"11","name":"ccc","age":"10"}
         // {"id":"12","name":"ccc","age":"10"}
-        tableEnv.sqlUpdate("CREATE TABLE source (\n" +
+        tableEnv.executeSql("CREATE TABLE source (\n" +
                 "    id INT,\n" +
                 "    name VARCHAR,\n" +
                 "    age Int\n" +
                 ") WITH (\n" +
-                "    'connector.type' = 'kafka',\n" +
-                "    'connector.version' = 'universal',\n" +
-                "    'connector.topic' = 'testIn',\n" +
-                "    'connector.properties.0.key' = 'bootstrap.servers',\n" +
-                "    'connector.properties.0.value' = '172.16.100.109:9092',\n" +
-                "    'update-mode' = 'append',\n" +
-                "    'format.type' = 'json',\n" +
-                "    'format.derive-schema' = 'true'\n" +
+                "    'connector' = 'kafka',\n" +
+                "    'properties.bootstrap.servers' = '106.52.82.15:9092',\n" +
+                "    'topic' = 'baixi_browse',\n" +
+                "    'format' = 'json',\n" +
+                "    'scan.startup.mode' = 'latest-offset'\n" +
                 ")");
 
-        tableEnv.sqlUpdate("CREATE TABLE sink (\n" +
+        tableEnv.executeSql("CREATE TABLE sink (\n" +
                 "    id INT,\n" +
                 "    name VARCHAR,\n" +
                 "    age Int\n" +
                 ") WITH (\n" +
-                "    'connector.type' = 'jdbc',\n" +
-                "    'connector.url' = 'jdbc:mysql://localhost:3306/test',\n" +
-                "    'connector.table' = 'jdbcsink',\n" +
-                "    'connector.username' = 'root',\n" +
-                "    'connector.password' = 'root',\n" +
-                "    'connector.write.flush.max-rows' = '1'\n" +
+                "    'connector' = 'jdbc',\n" +
+                "    'url' = 'jdbc:mysql://106.52.82.15:3307/baixi_test',\n" +
+                "    'table-name' = 'baixi_test_flink',\n" +
+                "    'username' = 'root',\n" +
+                "    'password' = 'cyz19980815'\n" +
                 ")");
 
 
-        tableEnv.sqlUpdate("insert into sink select * from source");
+        tableEnv.executeSql("insert into sink select * from source");
 
-        env.execute("SqlExample");
     }
 }
