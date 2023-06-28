@@ -5,7 +5,7 @@
     <parent>
         <artifactId>flink-example</artifactId>
         <groupId>com.dtstack.flink</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.16</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -15,12 +15,6 @@
     <dependencies>
         <!-- todo 使用到的第三方资源需要打到jar中,比如kafka、mysql -->
         <!-- plugin start  -->
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-json</artifactId>
-            <version>${flink.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

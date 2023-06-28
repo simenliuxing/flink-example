@@ -7,7 +7,7 @@
     <groupId>com.dtstack.flink</groupId>
     <artifactId>flink-example</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.16</version>
     
     <modules>
         <module>datastream</module>
@@ -20,85 +20,27 @@
         <maven.compiler.target>8</maven.compiler.target>
         <flink.version>1.16.1</flink.version>
         <scala.binary.version>2.12</scala.binary.version>
-        <frame.scope>compile</frame.scope>
+        <frame.scope>provided</frame.scope>
+        <log4j.version>2.12.1</log4j.version>
+        <sl4j.version>1.7.30</sl4j.version>
     </properties>
 
-    <profiles>
-        <profile>
-            <id>pkg</id>
-            <properties>
-                <frame.scope>provided</frame.scope>
-            </properties>
-        </profile>
-
-    </profiles>
-
     <dependencies>
-
+        <!-- todo 通过数栈提交的时候数栈会自动上传,这里无需打到jar中 -->
+        <!-- flink start -->
+        <!-- 日志实现 -->
         <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>2.12.7</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+            <scope>compile</scope>
         </dependency>
-
+        <!-- 日志桥接包   桥接包的版本须对应log4j2的版本 -->
         <dependency>
-            <groupId>org.apache.flink</groupId>
-            <!-- <artifactId>flink-clients_2.12</artifactId> -->
-            <artifactId>flink-clients</artifactId>
-            <version>${flink.version}</version>
-            <scope>${frame.scope}</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <!-- <artifactId>flink-table-api-java-bridge_2.12</artifactId> -->
-            <artifactId>flink-table-api-java-bridge</artifactId>
-            <version>${flink.version}</version>
-            <scope>${frame.scope}</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <!-- 1.14开始移除了旧的planner，只保留了Blink-->
-            <artifactId>flink-table-planner_2.12</artifactId>
-            <version>${flink.version}</version>
-            <scope>${frame.scope}</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <!-- <artifactId>flink-runtime-web_2.12</artifactId> -->
-            <artifactId>flink-runtime-web</artifactId>
-            <version>${flink.version}</version>
-            <scope>${frame.scope}</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-yarn</artifactId>
-            <version>${flink.version}</version>
-            <scope>${frame.scope}</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <!-- <artifactId>flink-statebackend-rocksdb_2.12</artifactId> -->
-            <artifactId>flink-statebackend-rocksdb</artifactId>
-            <version>${flink.version}</version>
-            <scope>${frame.scope}</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-state-processor-api</artifactId>
-            <version>${flink.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-metrics-dropwizard</artifactId>
-            <version>${flink.version}</version>
-            <scope>${frame.scope}</scope>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -107,119 +49,68 @@
             <version>${flink.version}</version>
             <scope>${frame.scope}</scope>
         </dependency>
-
-        <!-- Hadoop -->
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-shaded-hadoop-2-uber</artifactId>
-            <version>2.8.3-10.0</version>
+            <artifactId>flink-java</artifactId>
+            <version>${flink.version}</version>
             <scope>${frame.scope}</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-
-
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-connector-files</artifactId>
+            <artifactId>flink-streaming-java</artifactId>
             <version>${flink.version}</version>
+            <scope>${frame.scope}</scope>
         </dependency>
-
-
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <!-- <artifactId>flink-connector-jdbc_2.12</artifactId> -->
-            <artifactId>flink-connector-jdbc</artifactId>
+            <artifactId>flink-clients</artifactId>
             <version>${flink.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.27</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-connector-kafka</artifactId>
-            <!-- <artifactId>flink-connector-kafka_2.12</artifactId> -->
-            <version>${flink.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.kafka</groupId>
-                    <artifactId>kafka-clients</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-            <version>2.8.1</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
             <scope>${frame.scope}</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.17.0</version>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-planner_2.12</artifactId>
+            <version>${flink.version}</version>
             <scope>${frame.scope}</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-api-java-bridge</artifactId>
+            <version>${flink.version}</version>
+            <scope>${frame.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-common</artifactId>
+            <version>${flink.version}</version>
+            <scope>${frame.scope}</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-statebackend-rocksdb</artifactId>
+            <version>${flink.version}</version>
+            <scope>${frame.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-cep</artifactId>
+            <version>${flink.version}</version>
+            <scope>${frame.scope}</scope>
+        </dependency>
+        <!-- flink end -->
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <artifactSet>
-                                <excludes>
-                                    <exclude>org.scala-lang:*</exclude>
-                                    <exclude>com.google.code.findbugs:jsr305</exclude>
-                                    <exclude>org.slf4j:*</exclude>
-                                    <exclude>log4j:*</exclude>
-                                </excludes>
-                            </artifactSet>
-                            <filters>
-                                <filter>
-                                    <!-- Do not copy the signatures in the META-INF folder.
-                                    Otherwise, this might cause SecurityExceptions when using the JAR. -->
-                                    <artifact>*:*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*.SF</exclude>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
-                            <transformers>
-                                <!-- The service transformer is needed to merge META-INF/services files -->
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

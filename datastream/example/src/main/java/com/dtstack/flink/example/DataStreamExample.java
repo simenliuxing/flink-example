@@ -29,7 +29,6 @@ import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
-import org.apache.log4j.Level;
 
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -69,10 +68,10 @@ public class DataStreamExample {
         // {"name":"dtstack","age":"12","timestamp":"2021-08-08 10:10:10"}
         // {"name":"dtstack","age":"12","timestamp":"2021-08-08 10:10:20"}
         Properties properties = new Properties();
-        properties.setProperty("bootstrap.servers", "xxxxxxxx:9092");
+        properties.setProperty("bootstrap.servers", "106.52.82.15:9092");
         properties.setProperty("group.id", "dtstack");
         FlinkKafkaConsumer<String> myConsumer =
-                new FlinkKafkaConsumer<>("baixi_browse", new SimpleStringSchema(), properties);
+                new FlinkKafkaConsumer<>("11111", new SimpleStringSchema(), properties);
         myConsumer.setStartFromLatest();
 
         // 解析source端数据

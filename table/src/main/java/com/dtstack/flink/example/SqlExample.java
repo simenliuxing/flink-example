@@ -60,27 +60,27 @@ public class SqlExample {
         // {"id":"11","name":"ccc","age":"10"}
         // {"id":"12","name":"ccc","age":"10"}
         tableEnv.executeSql("CREATE TABLE source (\n" +
-                "    id INT,\n" +
-                "    name VARCHAR,\n" +
-                "    age Int\n" +
+                "    id int,\n" +
+                "    name STRING,\n" +
+                "    age int\n" +
                 ") WITH (\n" +
                 "    'connector' = 'kafka',\n" +
                 "    'properties.bootstrap.servers' = '106.52.82.15:9092',\n" +
-                "    'topic' = 'baixi_browse',\n" +
+                "    'topic' = '11111',\n" +
                 "    'format' = 'json',\n" +
                 "    'scan.startup.mode' = 'latest-offset'\n" +
                 ")");
 
         tableEnv.executeSql("CREATE TABLE sink (\n" +
-                "    id INT,\n" +
-                "    name VARCHAR,\n" +
-                "    age Int\n" +
+                "    id int,\n" +
+                "    name STRING,\n" +
+                "    age int\n" +
                 ") WITH (\n" +
                 "    'connector' = 'jdbc',\n" +
-                "    'url' = 'jdbc:mysql://xxxxxxxx:3307/baixi_test',\n" +
-                "    'table-name' = 'baixi_test_flink',\n" +
+                "    'url' = 'jdbc:mysql://localhost:3306/flink-test',\n" +
+                "    'table-name' = 'resultOut',\n" +
                 "    'username' = 'root',\n" +
-                "    'password' = 'xxxxx'\n" +
+                "    'password' = 'root'\n" +
                 ")");
 
 
