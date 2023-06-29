@@ -3,27 +3,34 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>datastream</artifactId>
+        <artifactId>cdc</artifactId>
         <groupId>com.dtstack.flink</groupId>
         <version>1.16</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>example</artifactId>
-    <name>flink-example : datastream : example</name>
+    <artifactId>mysql</artifactId>
+    <name>flink-example : cdc : mysql</name>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
 
     <dependencies>
-        <!-- todo 一些依赖的第三方jar可放在具体的udf中 -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.27</version>
+            <groupId>com.dtstack.flink</groupId>
+            <artifactId>core</artifactId>
+            <version>${core.version}</version>
         </dependency>
+        <!-- connector start -->
+        <!-- mysql -->
         <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-connector-jdbc</artifactId>
-            <version>${flink.version}</version>
+            <groupId>com.ververica</groupId>
+            <artifactId>flink-connector-mysql-cdc</artifactId>
+            <version>${flinkcdc.version}</version>
         </dependency>
+        <!-- connector end -->
     </dependencies>
 
     <build>
@@ -42,7 +49,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.dtstack.flink.example.DataStreamExample</mainClass>
+                                    <mainClass>com.dtstack.flink.cdc.Main</mainClass>
                                 </transformer>
                             </transformers>
                             <artifactSet>
@@ -94,10 +101,10 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <copy todir="${basedir}/../../${dist.dir}/datastream"
+                                <copy todir="${basedir}/../../${dist.dir}/cdc"
                                       file="${basedir}/target/${project.artifactId}-${project.version}.jar"/>
-                                <move file="${basedir}/../../${dist.dir}/datastream/${project.artifactId}-${project.version}.jar"
-                                      tofile="${basedir}/../../${dist.dir}/datastream/${project.artifactId}-${project.version}.jar"/>
+                                <move file="${basedir}/../../${dist.dir}/cdc/${project.artifactId}-${project.version}.jar"
+                                      tofile="${basedir}/../../${dist.dir}/cdc/${project.artifactId}-${project.version}.jar"/>
                                 <delete>
                                     <fileset dir="${basedir}/target"
                                              includes="*.jar"/>

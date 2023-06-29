@@ -19,3 +19,4 @@ bin/sideSql.txt
 krb5.conf
 .gradle
 gradle
+flink-dist/

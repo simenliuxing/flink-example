@@ -13,16 +13,19 @@
         <module>datastream</module>
         <module>udf</module>
         <module>table</module>
+        <module>cdc</module>
     </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <target.java.version>1.8</target.java.version>
         <flink.version>1.16.1</flink.version>
         <scala.binary.version>2.12</scala.binary.version>
         <frame.scope>provided</frame.scope>
         <log4j.version>2.12.1</log4j.version>
         <sl4j.version>1.7.30</sl4j.version>
+        <dist.dir>flink-dist</dist.dir>
     </properties>
 
     <dependencies>
