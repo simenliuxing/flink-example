@@ -29,7 +29,15 @@ public class Main {
             "-- https://nightlies.apache.org/flink/flink-docs-master/docs/dev/table/config/\n" +
             "-- https://nightlies.apache.org/flink/flink-docs-master/docs/deployment/config/\n" +
             "set pipeline.name = mysql-kafka;\n" +
-            "set table.exec.resource.default-parallelism = 1;\n" +
+            "set execution.checkpointing.interval = 1min;\n" +
+
+            "-- set table.exec.resource.default-parallelism = 3;\n" +
+
+            "set parallelism.default = 3;\n" +
+
+            "set execution.checkpointing.checkpoints-after-tasks-finish.enabled = true;\n" +
+            "set scan.incremental.close-idle-reader.enabled = true;\n" +
+
             "\n" +
             "-- source端配置和数据类型 参考上面\n" +
             "CREATE TABLE source\n" +
