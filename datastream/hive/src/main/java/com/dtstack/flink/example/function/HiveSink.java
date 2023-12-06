@@ -41,7 +41,8 @@ public class HiveSink extends RichSinkFunction<Row> {
         rows = new ArrayList<>();
         try {
             Class.forName("org.apache.hive.jdbc.HiveDriver");
-            connection = DriverManager.getConnection("jdbc:hive2://172.16.20.15:10004", "", "");
+            connection = DriverManager.getConnection("jdbc:hive2://10.166.171.109:8191");
+//            connection = DriverManager.getConnection("jdbc:hive2://172.16.20.15:10004");
             pstmt = connection.createStatement();
 
             LOG.info("connection = " + connection);
@@ -60,7 +61,8 @@ public class HiveSink extends RichSinkFunction<Row> {
                         }
                     }, 10, 5, TimeUnit.SECONDS);
         } catch (Exception e) {
-            LOG.error("error", e);
+            // 连接不上需要快速失败
+            throw new RuntimeException(e);
         }
     }
 
@@ -74,7 +76,7 @@ public class HiveSink extends RichSinkFunction<Row> {
 
     public synchronized void flush() {
         try {
-            StringBuffer sql = new StringBuffer("insert into bigdata_test.test123321 values ");
+            StringBuffer sql = new StringBuffer("insert into smoke.ods_bu_branch_info_di values ");
             for (Row row : rows) {
                 sql.append("(");
                 Integer id = (Integer) row.getField(0);
@@ -98,7 +100,7 @@ public class HiveSink extends RichSinkFunction<Row> {
         if (connection != null) {
             connection.close();
         }
-        if (scheduler == null) {
+        if (scheduler != null) {
             scheduler.shutdown();
         }
     }

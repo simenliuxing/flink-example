@@ -25,6 +25,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 import org.apache.flink.types.Row;
 
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -62,8 +63,8 @@ public class DataHiveExample {
             public void run(SourceContext<Row> sourceContext) throws Exception {
                 while (true) {
                     Row row = new Row(2);
-                    row.setField(0, 110);
-                    row.setField(1, System.currentTimeMillis() + "");
+                    row.setField(0, (int) (Math.random() * 10000));
+                    row.setField(1, UUID.randomUUID().toString().substring(0, 10));
                     sourceContext.collect(row);
                     Thread.sleep(100);
                 }

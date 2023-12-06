@@ -14,7 +14,7 @@
 
     <properties>
         <!-- todo 不要修改下面版本信息，否则任务无法运行 -->
-        <hive.version>2.3.7</hive.version>
+        <hive.version>1.2.1</hive.version>
         <hadoop.version>2.8.5</hadoop.version>
     </properties>
 
@@ -152,6 +152,13 @@
                 </exclusion>
 
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>${hadoop.version}</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
